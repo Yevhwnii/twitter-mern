@@ -30,8 +30,8 @@ export const useStylesSignIn = makeStyles((theme) => ({
       position: 'absolute',
       top: '50%',
       left: '50%',
-      width: '350%',
-      height: '350%',
+      width: '2600%',
+      height: '260%',
       transform: 'translate(-50%, -50%)',
     },
   },
@@ -82,7 +82,7 @@ export const useStylesSignIn = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = () => {
+export const SignIn: React.FC = (): React.ReactElement => {
   const classes = useStylesSignIn();
 
   const [openModalBlock, setOpenModalBlock] = useState<'signIn' | 'signUp'>();
