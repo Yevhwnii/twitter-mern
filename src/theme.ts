@@ -25,6 +25,7 @@ const theme = createMuiTheme({
     secondary: {
       main: 'rgb(26, 145, 218)',
     },
+
     error: {
       main: red.A400,
     },
@@ -83,6 +84,11 @@ const theme = createMuiTheme({
           padding: 8,
           marginRight: 20,
         },
+      },
+    },
+    MuiIconButton: {
+      root: {
+        color: 'black',
       },
     },
   },
