@@ -1,97 +1,72 @@
 import React from 'react';
 
+// Local
+import Tweet from '../components/Tweet';
+
 // Material UI
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-
-// Icons
-import TwitterIcon from '@material-ui/icons/Twitter';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import NotificationIcon from '@material-ui/icons/NotificationsOutlined';
-import MessageIcon from '@material-ui/icons/EmailOutlined';
-import BookmarkIcon from '@material-ui/icons/BookmarkBorderOutlined';
-import ListIcon from '@material-ui/icons/ListAltOutlined';
-import UserIcon from '@material-ui/icons/PermIdentityOutlined';
-import { makeStyles, Typography } from '@material-ui/core';
 import Container from '@material-ui/core/Container/Container';
+import TextField from '@material-ui/core/TextField/TextField';
+import Paper from '@material-ui/core/Paper/Paper';
+import { makeStyles, Typography, withStyles } from '@material-ui/core';
 
-const useHomeStyles = makeStyles((theme) => ({
-  sideMenuList: {
-    listStyle: 'none',
-    padding: 0,
-    margin: 0,
-    '& li': {
-      display: 'flex',
-      alignItems: 'center',
+import SideMenu from '../components/SideMenu';
+
+const useHomeStyles = makeStyles(() => ({
+  tweetsWrapper: {
+    height: '100%',
+    borderTop: '0',
+    borderBottom: '0',
+    '& > div.header': {
+      borderLeft: '0',
+      borderRight: '0',
+      borderTop: '0',
+      padding: '10px 15px',
       '& h6': {
-        fontWeight: 700,
-        fontSize: 20,
-        marginLeft: 15,
-      },
-      '& svg': {
-        fontSize: 28,
+        fontWeight: 800,
       },
     },
   },
 }));
 
+const SearchTextField = withStyles({
+  root: {},
+})(TextField);
+
 const Home = () => {
   const classes = useHomeStyles();
   return (
-    <Container style={{ height: '100vh' }} maxWidth='lg'>
+    <Container style={{ height: '100vh', maxWidth: '1400px' }} maxWidth='lg'>
       <Grid container spacing={4}>
-        <Grid item xs={2}>
-          <ul className={classes.sideMenuList}>
-            <li>
-              <IconButton style={{ margin: '15px 0' }} color='primary'>
-                <TwitterIcon style={{ fontSize: 36 }} />
-              </IconButton>
-            </li>
-            <li>
-              <IconButton color='default'>
-                <SearchIcon />
-              </IconButton>
-              <Typography variant='h6'>Search</Typography>
-            </li>
-            <li>
-              <IconButton>
-                <NotificationIcon />
-              </IconButton>
-              <Typography variant='h6'>Notifications</Typography>
-            </li>
-            <li>
-              <IconButton>
-                <MessageIcon />
-              </IconButton>
-              <Typography variant='h6'>Messages</Typography>
-            </li>
-            <li>
-              <IconButton>
-                <BookmarkIcon />
-              </IconButton>
-              <Typography variant='h6'>Bookmarks</Typography>
-            </li>
-            <li>
-              <IconButton>
-                <ListIcon />
-              </IconButton>
-              <Typography variant='h6'>List</Typography>
-            </li>
-            <li>
-              <IconButton>
-                <UserIcon />
-              </IconButton>
-              <Typography variant='h6'>Profile</Typography>
-            </li>
-          </ul>
+        <Grid item xs={3}>
+          <SideMenu />
         </Grid>
-        <Grid item xs={7}>
-          <h1>xs</h1>
+        <Grid item xs={6}>
+          <Paper square className={classes.tweetsWrapper} variant='outlined'>
+            <Paper className='header' square variant='outlined'>
+              <Typography variant='h6'>Home page</Typography>
+            </Paper>
+            {[
+              ...new Array(20).fill(
+                <Tweet
+                  body={` Today, it took another 2 hours of debating with Comcast, before I
+              reaching someone who could reply outside of a script. This was round
+              3 with them, and I would have likely given up a long time ago, were
+              it not for my own with in Customer Service. Draw your own
+              conclusions.`}
+                  user={{
+                    fullname: 'Richard Brooklyn',
+                    username: 'richibrook',
+                    avatarUrl:
+                      'https://images.unsplash.com/photo-1489481039754-8701aeda983b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80',
+                  }}
+                />
+              ),
+            ]}
+          </Paper>
         </Grid>
         <Grid item xs={3}>
-          <h1>xs</h1>
+          <SearchTextField label='Search...' />
         </Grid>
       </Grid>
     </Container>
