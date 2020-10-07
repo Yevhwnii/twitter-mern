@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { createMuiTheme } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import { red, grey } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
   typography: {
@@ -58,6 +58,11 @@ const theme = createMuiTheme({
         backgroundColor: 'rgb(245, 248, 250)',
       },
     },
+    MuiSvgIcon: {
+      colorSecondary: {
+        color: grey[500],
+      },
+    },
     MuiDialog: {
       paper: {
         borderRadius: 15,
@@ -88,7 +93,10 @@ const theme = createMuiTheme({
     },
     MuiIconButton: {
       root: {
-        color: 'black',
+        borderRadius: 25,
+      },
+      colorSecondary: {
+        backgroundColor: grey[500],
       },
     },
   },
