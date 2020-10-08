@@ -25,7 +25,7 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby='form-control'>
       <DialogTitle>
-        <IconButton onClick={onClose} color='secondary'>
+        <IconButton onClick={onClose} color='inherit'>
           <CloseIcon style={{ fontSize: 26 }} color='secondary' />
         </IconButton>
         {title}
