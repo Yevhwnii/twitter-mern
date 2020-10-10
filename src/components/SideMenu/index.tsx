@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Local
 import SideMenuItem from './SideMenuItem';
-// MUI
-import { Button, Hidden, makeStyles } from '@material-ui/core';
+import ModalBlock from '../ModalBlock';
+import AddTweetForm from '../AddTweetForm';
 
 // Icons
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -15,6 +15,11 @@ import BookmarkIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import ListIcon from '@material-ui/icons/ListAltOutlined';
 import UserIcon from '@material-ui/icons/PermIdentityOutlined';
 import CreateIcon from '@material-ui/icons/Create';
+
+// MUI
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Hidden from '@material-ui/core/Hidden';
 
 const useSideMenuStyles = makeStyles((theme) => ({
   sideMenuList: {
@@ -62,6 +67,14 @@ const useSideMenuStyles = makeStyles((theme) => ({
 
 const SideMenu = () => {
   const classes = useSideMenuStyles();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const handleOnModalClose = () => {
+    setOpenModal(false);
+  };
+  const handleOnModalOpen = () => {
+    setOpenModal(true);
+  };
   return (
     <ul className={classes.sideMenuList}>
       <IconButton className={classes.sideMenuLogo} color='primary'>
@@ -93,13 +106,16 @@ const SideMenu = () => {
       </SideMenuItem>
 
       <li className={classes.sideMenuTweetButton}>
-        <Button color='primary' variant='contained'>
+        <Button onClick={handleOnModalOpen} color='primary' variant='contained'>
           <Hidden smDown>Tweet</Hidden>
           <Hidden mdUp>
             <CreateIcon />
           </Hidden>
         </Button>
       </li>
+      <ModalBlock wellRounded onClose={handleOnModalClose} open={openModal}>
+        <AddTweetForm disablePadding minRows={7} maxRows={15} />
+      </ModalBlock>
     </ul>
   );
 };
