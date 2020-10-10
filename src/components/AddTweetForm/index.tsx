@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Icons
 import ImageIcon from '@material-ui/icons/ImageOutlined';
@@ -10,13 +10,18 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-interface AddTweetFormProps {}
+interface AddTweetFormProps {
+  maxRows?: number;
+  minRows?: number;
+  disablePadding?: boolean;
+}
 
-const useAddTweetFormStyles = makeStyles((theme) => ({
+const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
   addTweetForm: {
-    padding: '13px 20px 10px 20px',
+    padding: (props: AddTweetFormProps) =>
+      props.disablePadding ? '0 0 10px 0' : '13px 20px 10px 20px',
   },
 
   addTweetForm__body: {
@@ -70,13 +75,40 @@ const useAddTweetFormStyles = makeStyles((theme) => ({
     width: theme.spacing(7),
     marginRight: 12,
   },
+  addTweetForm__wrapper: {
+    display: 'flex',
+  },
 }));
 
-const AddTweetForm: React.FC<AddTweetFormProps> = () => {
-  const classes = useAddTweetFormStyles();
+// Constans
+const MAX_LENGTH = 280;
+
+const AddTweetForm: React.FC<AddTweetFormProps> = ({
+  maxRows,
+  minRows,
+  disablePadding,
+}) => {
+  const classes = useAddTweetFormStyles({ disablePadding });
+
+  const [text, setText] = useState<string>('');
+  const TEXT_LIMIT_PERCENT = Math.round((text.length / MAX_LENGTH) * 100);
+  const lengthLeft = MAX_LENGTH - text.length;
+
+  const handleChangeTextarea = (
+    e: React.FormEvent<HTMLTextAreaElement>
+  ): void => {
+    if (e.currentTarget) {
+      setText(e.currentTarget.value);
+    }
+  };
+
+  const handleAddTweetClick = (): void => {
+    setText('');
+  };
+
   return (
     <div className={classes.addTweetForm}>
-      <div className={classes.addTweetForm__body}>
+      <div className={classes.addTweetForm__wrapper}>
         <Avatar
           className={classes.addTweetForm__avatar}
           alt={'Your avatar'}
@@ -84,10 +116,16 @@ const AddTweetForm: React.FC<AddTweetFormProps> = () => {
             'https://images.unsplash.com/photo-1484517186945-df8151a1a871?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=687&q=80'
           }
         />
-        <TextareaAutosize
-          className={classes.addTweetForm__textarea}
-          placeholder='What is up?'
-        />
+        <div className={classes.addTweetForm__body}>
+          <TextareaAutosize
+            onChange={handleChangeTextarea}
+            className={classes.addTweetForm__textarea}
+            placeholder='What is up?'
+            value={text}
+            rowsMax={maxRows}
+            rowsMin={minRows}
+          />
+        </div>
       </div>
 
       <div className={classes.addTweetForm__footer}>
@@ -100,18 +138,34 @@ const AddTweetForm: React.FC<AddTweetFormProps> = () => {
           </IconButton>
         </div>
         <div className={classes.addTweetForm__footer__right}>
-          <span>280</span>
-          <div className={classes.addTweetForm__circleProgress}>
-            <CircularProgress variant='static' size={20} value={20} />
-            <CircularProgress
-              style={{ color: 'rgba(0,0,0,0.1' }}
-              variant='static'
-              size={20}
-              thickness={4}
-              value={100}
-            />
-          </div>
-          <Button color='primary' variant='contained'>
+          {text && (
+            <>
+              <span style={lengthLeft < 0 ? { color: 'red' } : undefined}>
+                {lengthLeft}
+              </span>
+              <div className={classes.addTweetForm__circleProgress}>
+                <CircularProgress
+                  variant='static'
+                  size={20}
+                  thickness={5}
+                  value={TEXT_LIMIT_PERCENT >= 100 ? 100 : TEXT_LIMIT_PERCENT}
+                  style={text.length >= 280 ? { color: 'red' } : undefined}
+                />
+                <CircularProgress
+                  style={{ color: 'rgba(0,0,0,0.1' }}
+                  variant='static'
+                  size={20}
+                  thickness={5}
+                  value={100}
+                />
+              </div>
+            </>
+          )}
+          <Button
+            onClick={handleAddTweetClick}
+            disabled={text.length > 280}
+            color='primary'
+            variant='contained'>
             Tweet
           </Button>
         </div>
