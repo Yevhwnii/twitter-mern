@@ -10,9 +10,25 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container/Container';
 import Input from '@material-ui/core/Input';
 import Paper from '@material-ui/core/Paper/Paper';
-import { makeStyles, Typography } from '@material-ui/core';
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  makeStyles,
+  TextareaAutosize,
+  Typography,
+} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
 import { grey } from '@material-ui/core/colors';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import ImageIcon from '@material-ui/icons/ImageOutlined';
+import EmojiIcon from '@material-ui/icons/EmojiEmotions';
 
 const useHomeStyles = makeStyles((theme) => ({
   container: {
@@ -67,23 +83,99 @@ const useHomeStyles = makeStyles((theme) => ({
       border: `1px solid ${theme.palette.primary.main}`,
     },
   },
-  relevantTopics: {
+  rightBarBlock: {
     backgroundColor: 'rgb(245,248,250)',
-    marginTop: 15,
+    marginTop: 20,
+    borderRadius: 20,
     width: '100%',
+    '& .MuiList-root': {
+      paddingTop: 0,
+    },
   },
-  relevantTopics__header: {
-    backgroundColor: 'rgb(245,248,250)',
+  rightBlockHeader: {
+    backgroundColor: 'transparent',
     borderTop: 0,
     borderLeft: 0,
     borderRight: 0,
 
-    padding: 13,
+    padding: '13px 18px',
     textAlign: 'center',
     '& h6': {
       fontWeight: 800,
-      fontSize: 22,
+      fontSize: 20,
     },
+  },
+
+  rightBlockListItem: {
+    cursor: 'pointer',
+    '& .MuiTypography-body1': {
+      fontWeight: 700,
+    },
+    '& .MuiListItemAvatar-root': {
+      minWidth: 50,
+    },
+    '& .MuiListItemText-root': {
+      margin: 0,
+    },
+    '&:hover': {
+      backgroundColor: '#edf3f6',
+    },
+  },
+
+  addTweetForm: {
+    padding: '13px 20px 10px 20px',
+  },
+
+  addTweetForm__body: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+  },
+
+  addTweetForm__footer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  addTweetForm__footer__actions: {
+    marginTop: 10,
+    paddingLeft: 60,
+  },
+
+  addTweetForm__textarea: {
+    width: '100%',
+    border: 0,
+    fontSize: 20,
+    outline: 'none',
+    fontFamily: 'inherit',
+    resize: 'none',
+  },
+
+  addTweetForm__footer__line: {
+    height: 12,
+    backgroundColor: '#E6ECF0',
+  },
+
+  addTweetForm__circleProgress: {
+    position: 'relative',
+    width: 20,
+    height: 20,
+    margin: '0 10px',
+    '& .MuiCircularProgress-root': {
+      position: 'absolute',
+    },
+  },
+
+  addTweetForm__footer__right: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+
+  addTweetForm__avatar: {
+    height: theme.spacing(7),
+    width: theme.spacing(7),
+    marginRight: 12,
   },
 }));
 
@@ -107,10 +199,58 @@ const Home = () => {
         <Grid item xs={1} md={3}>
           <SideMenu />
         </Grid>
-        <Grid item xs={8} md={7}>
+        <Grid item xs={8} md={6}>
           <Paper square className={classes.tweetsWrapper} variant='outlined'>
             <Paper className='header' square variant='outlined'>
               <Typography variant='h6'>Home page</Typography>
+            </Paper>
+            <Paper>
+              <div className={classes.addTweetForm}>
+                <div className={classes.addTweetForm__body}>
+                  <Avatar
+                    className={classes.addTweetForm__avatar}
+                    alt={'Your avatar'}
+                    src={
+                      'https://images.unsplash.com/photo-1484517186945-df8151a1a871?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=687&q=80'
+                    }
+                  />
+                  <TextareaAutosize
+                    className={classes.addTweetForm__textarea}
+                    placeholder='What is up?'
+                  />
+                </div>
+
+                <div className={classes.addTweetForm__footer}>
+                  <div
+                    className={classNames(
+                      classes.addTweetForm__footer__actions
+                    )}>
+                    <IconButton color='primary'>
+                      <ImageIcon style={{ fontSize: 26 }} />
+                    </IconButton>
+                    <IconButton color='primary'>
+                      <EmojiIcon style={{ fontSize: 26 }} />
+                    </IconButton>
+                  </div>
+                  <div className={classes.addTweetForm__footer__right}>
+                    <span>280</span>
+                    <div className={classes.addTweetForm__circleProgress}>
+                      <CircularProgress variant='static' size={20} value={20} />
+                      <CircularProgress
+                        style={{ color: 'rgba(0,0,0,0.1' }}
+                        variant='static'
+                        size={20}
+                        thickness={4}
+                        value={100}
+                      />
+                    </div>
+                    <Button color='primary' variant='contained'>
+                      Tweet
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <div className={classes.addTweetForm__footer__line} />
             </Paper>
             {[
               ...new Array(20).fill(
@@ -131,7 +271,7 @@ const Home = () => {
             ]}
           </Paper>
         </Grid>
-        <Grid item xs={3} md={2}>
+        <Grid item xs={3} md={3}>
           <div className={classes.rightBar}>
             <div className={classNames(classes.searchBar, focusClass)}>
               <SearchIcon />
@@ -143,43 +283,55 @@ const Home = () => {
                 disableUnderline
               />
             </div>
-            <Paper className={classes.relevantTopics}>
-              <Paper
-                square
-                className={classes.relevantTopics__header}
-                variant='outlined'>
+
+            <Paper className={classes.rightBarBlock}>
+              <Paper className={classes.rightBlockHeader} variant='outlined'>
                 <Typography variant='h6'>Relevant topics for you</Typography>
               </Paper>
-              <ul>
-                <li>
-                  <Paper>
-                    <Typography>Discussion</Typography>
-                    <Typography>Nazwa</Typography>
-                    <Typography>Tweets: 4141</Typography>
-                  </Paper>
-                </li>
-                <li>
-                  <Paper>
-                    <Typography>Discussion</Typography>
-                    <Typography>Nazwa</Typography>
-                    <Typography>Tweets: 4141</Typography>
-                  </Paper>
-                </li>
-                <li>
-                  <Paper>
-                    <Typography>Discussion</Typography>
-                    <Typography>Nazwa</Typography>
-                    <Typography>Tweets: 4141</Typography>
-                  </Paper>
-                </li>
-                <li>
-                  <Paper>
-                    <Typography>Discussion</Typography>
-                    <Typography>Nazwa</Typography>
-                    <Typography>Tweets: 4141</Typography>
-                  </Paper>
-                </li>
-              </ul>
+
+              <List>
+                <ListItem className={classes.rightBlockListItem}>
+                  <ListItemText
+                    primary='#coronavirus'
+                    secondary='Tweets: 311 333'
+                  />
+                </ListItem>
+                <Divider component='li' />
+                <ListItem className={classes.rightBlockListItem}>
+                  <ListItemText
+                    primary='#uzbekistan'
+                    secondary='Tweets: 5011'
+                  />
+                </ListItem>
+                <Divider component='li' />
+                <ListItem className={classes.rightBlockListItem}>
+                  <ListItemText primary='#poland' secondary='Tweets: 41 421' />
+                </ListItem>
+              </List>
+            </Paper>
+
+            <Paper className={classes.rightBarBlock}>
+              <Paper variant='outlined' className={classes.rightBlockHeader}>
+                <Typography variant='h6'>Whom to read</Typography>
+              </Paper>
+              <List>
+                <ListItem className={classes.rightBlockListItem}>
+                  <ListItemAvatar>
+                    <Avatar
+                      alt='Remy Sharp'
+                      src='https://images.unsplash.com/photo-1584799235813-aaf50775698c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80'
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary='Dock of Shame'
+                    secondary='@FavDockOfShame'
+                  />
+                  <Button color='primary'>
+                    <PersonAddIcon />
+                  </Button>
+                </ListItem>
+                <Divider component='li' />
+              </List>
             </Paper>
           </div>
         </Grid>

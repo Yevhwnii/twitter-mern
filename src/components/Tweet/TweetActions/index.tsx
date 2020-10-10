@@ -11,7 +11,7 @@ import HeartIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import PublishIcon from '@material-ui/icons/Publish';
 import CommentIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 
-const useTweetActionsStyles = makeStyles((theme) => ({
+export const useTweetActionsStyles = makeStyles((theme) => ({
   tweetActions: {
     margin: '10px 0px',
     position: 'relative',
