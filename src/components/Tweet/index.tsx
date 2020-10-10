@@ -11,8 +11,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
 
-// TODO: Divide tweet into small components
-
 const useTweetStyles = makeStyles(() => ({
   tweet: {
     '&:hover': {
