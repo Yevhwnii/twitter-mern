@@ -1,10 +1,10 @@
 import React from 'react';
 
 // MUI
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, Theme } from '@material-ui/core';
 import { ButtonBase } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden/Hidden';
 
 interface SideMenuItemProps {
   iconButtonStyles?: {};
@@ -88,9 +88,11 @@ const SideMenuItem: React.FC<SideMenuItemProps> = ({
       <div className={classes.itemBase}>
         <ButtonBase>
           {iconWithProps}
-          <Typography className={classes.label} variant={labelVariant}>
-            {label}
-          </Typography>
+          <Hidden smDown>
+            <Typography className={classes.label} variant={labelVariant}>
+              {label}
+            </Typography>
+          </Hidden>
         </ButtonBase>
       </div>
     </li>

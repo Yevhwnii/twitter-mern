@@ -13,10 +13,18 @@ const useTweetAvatarStyles = makeStyles((theme) => ({
   tweetAvatar: {
     display: 'flex',
     justifyContent: 'center',
+    marginRight: 10,
     paddingLeft: 10,
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 0,
+    },
     '& > div': {
-      width: theme.spacing(5),
-      height: theme.spacing(5),
+      width: theme.spacing(6),
+      height: theme.spacing(6),
+      [theme.breakpoints.down('sm')]: {
+        width: theme.spacing(7),
+        height: theme.spacing(7),
+      },
     },
   },
 }));

@@ -32,6 +32,10 @@ const theme = createMuiTheme({
     background: {
       default: '#fff',
     },
+    // All text on the website
+    text: {
+      primary: '#14171a',
+    },
   },
   shadows: [],
   overrides: {

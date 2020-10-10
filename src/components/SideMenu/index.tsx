@@ -3,7 +3,7 @@ import React from 'react';
 // Local
 import SideMenuItem from './SideMenuItem';
 // MUI
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, Hidden, makeStyles } from '@material-ui/core';
 
 // Icons
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -14,16 +14,25 @@ import MessageIcon from '@material-ui/icons/EmailOutlined';
 import BookmarkIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import ListIcon from '@material-ui/icons/ListAltOutlined';
 import UserIcon from '@material-ui/icons/PermIdentityOutlined';
+import CreateIcon from '@material-ui/icons/Create';
 
 const useSideMenuStyles = makeStyles((theme) => ({
   sideMenuList: {
+    position: 'sticky',
+    top: 0,
     listStyle: 'none',
     padding: 0,
-    paddingLeft: 70,
     margin: 0,
+    maxWidth: 230,
     '& li': {
       display: 'flex',
       alignItems: 'center',
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: 70,
+    },
+    [theme.breakpoints.up('sm')]: {
+      marginRight: 15,
     },
   },
   sideMenuLogo: {
@@ -33,8 +42,21 @@ const useSideMenuStyles = makeStyles((theme) => ({
     },
   },
   sideMenuTweetButton: {
-    padding: theme.spacing(3.2),
-    marginTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: 35,
+    },
+    '& button': {
+      padding: theme.spacing(3.2),
+      marginTop: theme.spacing(2),
+      [theme.breakpoints.down('sm')]: {
+        width: 25,
+        marginTop: 0,
+      },
+      width: '100%',
+    },
   },
 }));
 
@@ -70,13 +92,12 @@ const SideMenu = () => {
         <UserIcon />
       </SideMenuItem>
 
-      <li>
-        <Button
-          className={classes.sideMenuTweetButton}
-          color='primary'
-          fullWidth
-          variant='contained'>
-          Tweet
+      <li className={classes.sideMenuTweetButton}>
+        <Button color='primary' variant='contained'>
+          <Hidden smDown>Tweet</Hidden>
+          <Hidden mdUp>
+            <CreateIcon />
+          </Hidden>
         </Button>
       </li>
     </ul>

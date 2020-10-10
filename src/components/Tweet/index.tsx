@@ -42,10 +42,10 @@ const Tweet: React.FC<TweetProps> = ({
   return (
     <Paper square className={classNames(classes.tweet)} variant='outlined'>
       <Grid container spacing={2}>
-        <Grid item sm={3} md={2} lg={1}>
+        <Grid item sm={2} md={1}>
           <TweetAvatar user={user} />
         </Grid>
-        <Grid item sm={9} md={10} lg={11}>
+        <Grid item sm={10} md={11}>
           <TweetHeader user={user} />
           <TweetBody body={body} />
           <TweetActions />
