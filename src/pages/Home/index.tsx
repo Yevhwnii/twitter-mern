@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { useHomeStyles } from './theme';
 
@@ -6,6 +7,8 @@ import { useHomeStyles } from './theme';
 import Tweet from '../../components/Tweet';
 import AddTweetForm from '../../components/AddTweetForm';
 import SideMenu from '../../components/SideMenu';
+import { fetchTweets } from '../../store/ducks/tweets/actionCreators';
+import { selectIsLoadingTweetsState, selectTweets } from '../../store/ducks/tweets/selectors';
 
 // Material UI
 import Grid from '@material-ui/core/Grid';
@@ -23,9 +26,19 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import { StylesProvider } from '@material-ui/core/styles';
+import { CircularProgress } from '@material-ui/core';
+
+
 
 const Home = () => {
   const classes = useHomeStyles();
+   const dispatch = useDispatch()
+   const tweets = useSelector(selectTweets)
+   const isLoading = useSelector(selectIsLoadingTweetsState)
+
+   useEffect(() => {
+     dispatch(fetchTweets())
+   }, [dispatch])
 
   const [addFocusClass, setAddFocusClass] = useState(false);
   const focusClass = addFocusClass ? classes.searchBarFocusClass : '';
@@ -55,23 +68,14 @@ const Home = () => {
                 <AddTweetForm />
                 <div className={classes.addTweetForm__footer__line} />
               </Paper>
-              {[
-                ...new Array(20).fill(
+              {isLoading ? <div style={{textAlign: 'center', marginTop: 50}}><CircularProgress/></div> : tweets.map(tweet =>
                   <Tweet
-                    body={` Today, it took another 2 hours of debating with Comcast, before I
-              reaching someone who could reply outside of a script. This was round
-              3 with them, and I would have likely given up a long time ago, were
-              it not for my own with in Customer Service. Draw your own
-              conclusions.`}
-                    user={{
-                      fullname: 'Richard Brooklyn',
-                      username: 'richibrook',
-                      avatarUrl:
-                        'https://images.unsplash.com/photo-1489481039754-8701aeda983b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80',
-                    }}
+                  key={tweet._id}
+                    body={tweet.text}
+                    user={tweet.user}
                   />
-                ),
-              ]}
+                )
+              }
             </Paper>
           </Grid>
           <Grid item xs={3} md={3}>
