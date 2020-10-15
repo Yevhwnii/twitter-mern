@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomLink from '../shared/Link';
 import classNames from 'classnames';
 
 // Locals
@@ -24,6 +25,7 @@ const useTweetStyles = makeStyles(() => ({
 }));
 
 interface TweetProps {
+  _id: string;
   user: {
     fullname: string;
     username: string;
@@ -33,22 +35,25 @@ interface TweetProps {
 }
 
 const Tweet: React.FC<TweetProps> = ({
+  _id,
   user,
   body,
 }: TweetProps): React.ReactElement => {
   const classes = useTweetStyles();
   return (
     <Paper square className={classNames(classes.tweet)} variant='outlined'>
-      <Grid container spacing={2}>
-        <Grid item sm={2} md={1}>
-          <TweetAvatar user={user} />
+      <CustomLink to={`/home/tweet/${_id}`}>
+        <Grid container spacing={2}>
+          <Grid item sm={2} md={1}>
+            <TweetAvatar user={user} />
+          </Grid>
+          <Grid item sm={10} md={11}>
+            <TweetHeader user={user} />
+            <TweetBody body={body} />
+            <TweetActions />
+          </Grid>
         </Grid>
-        <Grid item sm={10} md={11}>
-          <TweetHeader user={user} />
-          <TweetBody body={body} />
-          <TweetActions />
-        </Grid>
-      </Grid>
+      </CustomLink>
     </Paper>
   );
 };
