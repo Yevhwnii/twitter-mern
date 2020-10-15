@@ -1,5 +1,7 @@
 import React from 'react';
 
+import CustomLink from '../../shared/Link';
+
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import ListItem from '@material-ui/core/ListItem';
@@ -14,6 +16,7 @@ interface RightBlockListItemProps {
   primaryText: string;
   secondaryText: string;
   showDivider?: boolean;
+  to?: string;
   avatar?: {
     url: string;
     alt: string;
@@ -46,19 +49,22 @@ const RightBlockListItem: React.FC<RightBlockListItemProps> = ({
   primaryText,
   secondaryText,
   showDivider,
+  to,
 }) => {
   const classes = useRightBlockListItemStyles();
 
   if (!avatar) {
     return (
       <>
-        <ListItem className={classes.rightBlockListItem}>
-          <ListItemText
-            primary={primaryText}
-            secondary={`'Tweets: ${secondaryText}`}
-          />
-        </ListItem>
-        {showDivider && <Divider component='li' />}
+        <CustomLink to={`/home${to}`}>
+          <ListItem className={classes.rightBlockListItem}>
+            <ListItemText
+              primary={primaryText}
+              secondary={`'Tweets: ${secondaryText}`}
+            />
+          </ListItem>
+          {showDivider && <Divider component='li' />}
+        </CustomLink>
       </>
     );
   } else {
