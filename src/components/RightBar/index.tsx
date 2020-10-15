@@ -9,24 +9,20 @@ import Typography from '@material-ui/core/Typography';
 import { useRightBarStyles } from './theme';
 import RightBlockListItem from './ListItem';
 import CustomSearchBar from './SearchBar';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useSelector } from 'react-redux';
+import {
+  selectIsLoadingTopicsState,
+  selectTopics,
+} from '../../store/ducks/topics/selectors';
 
-const RightBar = () => {
+interface RightBarProps {}
+
+const RightBar: React.FC<RightBarProps> = () => {
   const classes = useRightBarStyles();
 
-  const array = [
-    {
-      title: '#HandOffRussianHistory',
-      retweets: 44,
-    },
-    {
-      title: '#GitlerCaput',
-      retweets: 413133,
-    },
-    {
-      title: '#NoWayYouGay',
-      retweets: 22347,
-    },
-  ];
+  const isTopicsLoading = useSelector(selectIsLoadingTopicsState);
+  const topics = useSelector(selectTopics);
 
   return (
     <div className={classes.rightBar}>
@@ -37,18 +33,27 @@ const RightBar = () => {
           <Typography variant='h6'>Relevant topics for you</Typography>
         </Paper>
 
-        <List>
-          {array.map((topic, index) => {
-            const showDivider = array.length - 1 !== index;
-            return (
-              <RightBlockListItem
-                showDivider={showDivider}
-                primaryText={topic.title}
-                secondaryText={topic.retweets.toString()}
-              />
-            );
-          })}
-        </List>
+        {!isTopicsLoading ? (
+          <List>
+            {topics.map((topic, index) => {
+              const showDivider = topics.length - 1 !== index;
+              const titleWithOutHashTag = topic.title.replace('#', '');
+              return (
+                <RightBlockListItem
+                  to={`/search?q=${titleWithOutHashTag}`}
+                  key={topic.title}
+                  showDivider={showDivider}
+                  primaryText={topic.title}
+                  secondaryText={topic.retweets.toString()}
+                />
+              );
+            })}
+          </List>
+        ) : (
+          <div style={{ textAlign: 'center', padding: '50px 0' }}>
+            <CircularProgress />
+          </div>
+        )}
       </Paper>
 
       <Paper className={classes.rightBarBlock}>
