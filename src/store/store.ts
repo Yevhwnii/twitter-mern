@@ -1,25 +1,31 @@
 import { createStore, compose, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga'
+import createSagaMiddleware from 'redux-saga';
+import { TopicsState } from './ducks/topics/contracts/state';
 import { TweetsState } from './ducks/tweets/contracts/state';
 import { rootReducer } from './rootReducer';
 import { rootSaga } from './rootSaga';
 
 declare global {
   interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__? : typeof compose
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
   }
 }
 
 const composeEnhancers =
-  (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+  (typeof window !== 'undefined' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
 
-
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 
 export interface RootState {
-  tweets: TweetsState
+  tweets: TweetsState;
+  topics: TopicsState;
 }
 
-export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
+export const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(sagaMiddleware))
+);
 
-sagaMiddleware.run(rootSaga)
+sagaMiddleware.run(rootSaga);
