@@ -20,6 +20,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';
+import { useHistory } from 'react-router-dom';
 
 const useSideMenuStyles = makeStyles((theme) => ({
   sideMenuList: {
@@ -67,6 +68,7 @@ const useSideMenuStyles = makeStyles((theme) => ({
 
 const SideMenu = () => {
   const classes = useSideMenuStyles();
+  const history = useHistory();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleOnModalClose = () => {
@@ -75,9 +77,16 @@ const SideMenu = () => {
   const handleOnModalOpen = () => {
     setOpenModal(true);
   };
+
+  const handleHomePageClick = () => {
+    history.push('/home');
+  };
   return (
     <ul className={classes.sideMenuList}>
-      <IconButton className={classes.sideMenuLogo} color='primary'>
+      <IconButton
+        onClick={handleHomePageClick}
+        className={classes.sideMenuLogo}
+        color='primary'>
         <TwitterIcon color='primary' />
       </IconButton>
 
