@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { RootState } from '../../store';
-import { LoadingState, TopicsState } from './contracts/state';
+import { LoadingState } from '../common/contracts/loadingState';
+import { TopicsState } from './contracts/state';
 
 const selectTopicsState = (state: RootState): TopicsState => state.topics;
 

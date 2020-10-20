@@ -1,7 +1,8 @@
 import produce, { Draft } from 'immer';
 import { TopicActions } from './actionCreators';
-import { LoadingState, TopicsState } from './contracts/state';
+import { TopicsState } from './contracts/state';
 import { TopicsActionType } from './actionCreators';
+import { LoadingState } from '../common/contracts/loadingState';
 
 const initialState: TopicsState = {
   items: [],

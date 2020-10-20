@@ -1,5 +1,6 @@
 import { Action } from 'redux';
-import { LoadingState, Topic } from './contracts/state';
+import { LoadingState } from '../common/contracts/loadingState';
+import { Topic } from './contracts/state';
 import { TopicsState } from './contracts/state';
 
 export enum TopicsActionType {

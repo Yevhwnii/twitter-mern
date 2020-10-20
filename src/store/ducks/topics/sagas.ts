@@ -1,11 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { TopicsApi } from '../../../services/api/topicApi';
+import { LoadingState } from '../common/contracts/loadingState';
 import {
   setTopics,
   setTopicsLoadingState,
   TopicsActionType,
 } from './actionCreators';
-import { LoadingState } from './contracts/state';
 
 export function* fetchTopicsRequest() {
   try {
