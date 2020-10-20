@@ -21,6 +21,7 @@ import Paper from '@material-ui/core/Paper';
 import { CircularProgress } from '@material-ui/core';
 import { Route } from 'react-router-dom';
 import PageHeader from '../../components/PageHeader';
+import SingleTweet from '../../components/Tweet/SingleTweet';
 
 const Home = () => {
   const classes = useHomeStyles();
@@ -67,6 +68,7 @@ const Home = () => {
                 ))
               )}
             </Route>
+            <Route path='/home/tweet/:id' component={SingleTweet} />
           </Paper>
         </Grid>
         <Grid item xs={3} md={3}>
