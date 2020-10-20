@@ -1,12 +1,7 @@
-export enum LoadingState {
-  LOADED = 'LOADED',
-  LOADING= 'LOADING',
-  ERROR = 'ERROR',
-  NEVER = 'NEVER',
-}
+import { LoadingState } from '../../common/contracts/loadingState';
 
 export interface Tweet {
-  _id: string,
+  _id: string;
   text: string;
   user: {
     fullname: string;
