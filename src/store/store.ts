@@ -1,5 +1,6 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { SingleTweetState } from './ducks/singleTweet/contracts/state';
 import { TopicsState } from './ducks/topics/contracts/state';
 import { TweetsState } from './ducks/tweets/contracts/state';
 import { rootReducer } from './rootReducer';
@@ -21,6 +22,7 @@ const sagaMiddleware = createSagaMiddleware();
 export interface RootState {
   tweets: TweetsState;
   topics: TopicsState;
+  singleTweet: SingleTweetState;
 }
 
 export const store = createStore(
