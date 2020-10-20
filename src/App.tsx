@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 
@@ -10,9 +10,10 @@ function App() {
         <Route path='/signin'>
           <SignIn />
         </Route>
-        <Route path='/'>
+        <Route path='/home'>
           <Home />
         </Route>
+        <Redirect to={'/home'} />
       </Switch>
     </div>
   );
