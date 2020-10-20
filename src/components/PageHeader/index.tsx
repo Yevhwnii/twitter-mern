@@ -1,7 +1,7 @@
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect, useState } from 'react';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import ArrowIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
