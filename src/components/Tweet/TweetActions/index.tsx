@@ -50,10 +50,17 @@ export const useTweetActionsStyles = makeStyles((theme) => ({
   },
 }));
 
-const TweetActions = () => {
+interface TweetActionProps {
+  styles?: any;
+}
+
+const TweetActions: React.FC<TweetActionProps> = ({ styles }) => {
   const classes = useTweetActionsStyles();
   return (
-    <div className={classes.tweetActions} aria-label='tweet actions'>
+    <div
+      className={classes.tweetActions}
+      style={{ ...styles }}
+      aria-label='tweet actions'>
       <div className={classes.tweetActions__withText}>
         <IconButton color='primary'>
           <CommentIcon color='secondary' />
