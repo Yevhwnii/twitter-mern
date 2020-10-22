@@ -9,15 +9,31 @@ interface TweetHeaderProps {
     fullname: string;
     username: string;
   };
+  singleTweet?: boolean;
 }
 
-const TweetHeader: React.FC<TweetHeaderProps> = ({ user }) => {
+const GreySpan = ({ children, singleTweet }: any) => {
+  const styles = singleTweet
+    ? {
+        color: grey[500],
+      }
+    : {
+        color: grey[500],
+        marginLeft: 4,
+      };
+  return <span style={styles}>{children}</span>;
+};
+
+const TweetHeader: React.FC<TweetHeaderProps> = ({ user, singleTweet }) => {
   return (
-    <Typography>
+    <Typography style={singleTweet ? { marginLeft: 15 } : undefined}>
       <b>{user.fullname}</b>
-      <span style={{ color: grey[500], marginLeft: 5 }}>
-        @{user.username} • 2 min
-      </span>
+      {singleTweet && <GreySpan>• 2 min</GreySpan>}
+      {singleTweet && <br />}
+      <GreySpan singleTweet>
+        @{user.username}
+        {!singleTweet && '• 2 min'}
+      </GreySpan>
     </Typography>
   );
 };

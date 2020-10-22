@@ -8,6 +8,7 @@ interface TweetAvatarProps {
     username?: string;
     avatarUrl: string;
   };
+  styles?: any;
 }
 const useTweetAvatarStyles = makeStyles((theme) => ({
   tweetAvatar: {
@@ -29,10 +30,10 @@ const useTweetAvatarStyles = makeStyles((theme) => ({
   },
 }));
 
-const TweetAvatar: React.FC<TweetAvatarProps> = ({ user }) => {
+const TweetAvatar: React.FC<TweetAvatarProps> = ({ user, styles }) => {
   const classes = useTweetAvatarStyles();
   return (
-    <div className={classes.tweetAvatar}>
+    <div className={classes.tweetAvatar} {...styles}>
       <Avatar alt={`Avatar of user: ${user.fullname}`} src={user.avatarUrl}>
         U
       </Avatar>
