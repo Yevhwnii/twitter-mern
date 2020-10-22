@@ -1,5 +1,12 @@
 import { LoadingState } from '../../common/contracts/loadingState';
 
+export enum AddFormStatus {
+  LOADING = 'LOADING',
+  ERROR = 'ERROR',
+  NEVER = 'NEVER',
+  FINISHED = 'FINISHED',
+}
+
 export interface Tweet {
   _id: string;
   text: string;
@@ -13,4 +20,5 @@ export interface Tweet {
 export interface TweetsState {
   items: Tweet[];
   loadingState: LoadingState;
+  addTweetStatus: AddFormStatus;
 }
