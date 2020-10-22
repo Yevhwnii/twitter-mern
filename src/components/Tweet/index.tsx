@@ -11,6 +11,7 @@ import TweetAvatar from './TweetAvatar';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
 
 const useTweetStyles = makeStyles(() => ({
   tweet: {
@@ -21,6 +22,10 @@ const useTweetStyles = makeStyles(() => ({
     paddingTop: 15,
     paddingLeft: 10,
     paddingRight: 10,
+  },
+  singleTweetPaper: {
+    border: 0,
+    margin: '10px 6px',
   },
 }));
 
@@ -54,6 +59,31 @@ const Tweet: React.FC<TweetProps> = ({
           </Grid>
         </Grid>
       </CustomLink>
+    </Paper>
+  );
+};
+
+export const SingleTweet: React.FC<TweetProps> = ({ user, body }) => {
+  const classes = useTweetStyles();
+  return (
+    <Paper square className={classes.singleTweetPaper} variant='outlined'>
+      <Grid container direction='column' spacing={2}>
+        <Grid container direction='row' item xs={12}>
+          <Grid item sm={2} md={1}>
+            <TweetAvatar user={user} styles={{ marginLeft: 7 }} />
+          </Grid>
+          <Grid item sm={10} md={11}>
+            <TweetHeader singleTweet user={user} />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <TweetBody
+            variant={'h5'}
+            styles={{ color: grey[800], lineHeight: 1.3125, marginLeft: 7 }}
+            body={body}
+          />
+        </Grid>
+      </Grid>
     </Paper>
   );
 };
