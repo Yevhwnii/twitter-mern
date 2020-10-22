@@ -44,7 +44,7 @@ const PageHeader: React.FC = () => {
         }
         break;
     }
-  }, [location]);
+  }, [location, tweetRegEx, queryParam]);
 
   const handleButton = () => {
     history.goBack();
