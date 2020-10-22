@@ -1,29 +1,14 @@
-import { Action } from 'redux';
 import { LoadingState } from '../common/contracts/loadingState';
-import { TweetsState } from './contracts/state';
-
-// Name of action types
-export enum TweetActionTypes {
-  SET_TWEETS = 'tweets/SET_TWEETS',
-  FETCH_TWEETS = 'tweets/FETCH_TWEETS',
-  SET_LOADING_STATE = 'tweets/SET_LOADING_STATE',
-}
-
-// Interface which regulates setTweets action
-export interface SetTweetsActionInterface extends Action<TweetActionTypes> {
-  type: TweetActionTypes.SET_TWEETS;
-  payload: TweetsState['items'];
-}
-
-export interface FetchTweetsActionInterface extends Action<TweetActionTypes> {
-  type: TweetActionTypes.FETCH_TWEETS;
-}
-
-export interface SetTweetsLoadingStateActionInterface
-  extends Action<TweetActionTypes> {
-  type: TweetActionTypes.SET_LOADING_STATE;
-  payload: LoadingState;
-}
+import {
+  AddTweetActionInterface,
+  AsyncAddTweetActionInterface,
+  FetchTweetsActionInterface,
+  SetAddFormStatusActionInterface,
+  SetTweetsActionInterface,
+  SetTweetsLoadingStateActionInterface,
+  TweetActionTypes,
+} from './contracts/actionTypes';
+import { AddFormStatus, Tweet, TweetsState } from './contracts/state';
 
 // Function itself which is returning action object
 export const setTweets = (
@@ -33,10 +18,15 @@ export const setTweets = (
   payload,
 });
 
-export const setTweetsLoadingState = (
-  payload: LoadingState
-): SetTweetsLoadingStateActionInterface => ({
-  type: TweetActionTypes.SET_LOADING_STATE,
+export const asyncAddTweet = (
+  payload: string
+): AsyncAddTweetActionInterface => ({
+  type: TweetActionTypes.ASYNC_ADD_TWEET,
+  payload,
+});
+
+export const addTweet = (payload: Tweet): AddTweetActionInterface => ({
+  type: TweetActionTypes.ADD_TWEET,
   payload,
 });
 
@@ -44,8 +34,16 @@ export const fetchTweets = (): FetchTweetsActionInterface => ({
   type: TweetActionTypes.FETCH_TWEETS,
 });
 
-// Tweets action available in other files
-export type TweetsActions =
-  | SetTweetsActionInterface
-  | SetTweetsLoadingStateActionInterface
-  | FetchTweetsActionInterface;
+export const setTweetsLoadingState = (
+  payload: LoadingState
+): SetTweetsLoadingStateActionInterface => ({
+  type: TweetActionTypes.SET_LOADING_STATE,
+  payload,
+});
+
+export const setAddFormStatus = (
+  payload: AddFormStatus
+): SetAddFormStatusActionInterface => ({
+  type: TweetActionTypes.SET_ADDFORM_STATUS,
+  payload,
+});
