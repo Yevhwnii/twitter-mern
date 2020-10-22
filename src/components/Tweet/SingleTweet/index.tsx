@@ -2,7 +2,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Tweet from '..';
+import { SingleTweet as SingleTweetComponent } from '..';
 import {
   clearTweetBuffer,
   fetchTweetData,
@@ -37,7 +37,11 @@ const SingleTweet: React.FC = () => {
   }
 
   return (
-    <>{singleTweet && <Tweet body={singleTweet.text} {...singleTweet} />}</>
+    <>
+      {singleTweet && (
+        <SingleTweetComponent body={singleTweet.text} {...singleTweet} />
+      )}
+    </>
   );
 };
 
