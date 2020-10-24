@@ -1,8 +1,8 @@
 # Twitter clone developed for learning purposes with ReactJS
 
-### Backend part of application:
+## Backend part of application:
 
-# https://github.com/Yevhwnii/twitter-mern-backend
+### https://github.com/Yevhwnii/twitter-mern-backend
 
 ## Available Scripts
 
