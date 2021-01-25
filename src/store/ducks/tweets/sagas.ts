@@ -11,30 +11,24 @@ import {
   AsyncAddTweetActionInterface,
   TweetActionTypes,
 } from './contracts/actionTypes';
-import { AddFormStatus, Tweet } from './contracts/state';
+import { AddFormStatus } from './contracts/state';
 
 export function* fetchTweetsRequest() {
   try {
     const tweets = yield call(TweetsApi.fetchTweets);
-    yield put(setTweets(tweets));
+    yield put(setTweets(tweets.data));
   } catch (error) {
     yield put(setTweetsLoadingState(LoadingState.ERROR));
   }
 }
 
-export function* addTweetRequest({ payload }: AsyncAddTweetActionInterface) {
+export function* addTweetRequest({
+  payload: text,
+}: AsyncAddTweetActionInterface) {
   try {
-    const data: Tweet = {
-      _id: Math.random().toString(36).substr(2),
-      text: payload,
-      user: {
-        fullname: 'Test User',
-        username: 'test',
-        avatarUrl: 'https://source.unsplash.com/random/100x100?3',
-      },
-    };
-    const tweet = yield call(TweetsApi.addTweet, data);
-    yield put(addTweet(tweet));
+    const tweet = yield call(TweetsApi.addTweet, text);
+
+    yield put(addTweet(tweet.data));
   } catch (error) {
     yield put(setAddFormStatus(AddFormStatus.ERROR));
   }
