@@ -64,6 +64,7 @@ const Home = () => {
                     key={tweet._id}
                     body={tweet.text}
                     user={tweet.user}
+                    createdAt={tweet.createdAt}
                   />
                 ))
               )}
