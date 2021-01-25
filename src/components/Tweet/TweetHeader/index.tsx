@@ -3,6 +3,7 @@ import React from 'react';
 // MUI
 import Typography from '@material-ui/core/Typography';
 import { grey } from '@material-ui/core/colors';
+import { formatDate } from '../../../utils/formatDate';
 
 interface TweetHeaderProps {
   user: {
@@ -10,9 +11,10 @@ interface TweetHeaderProps {
     username: string;
   };
   singleTweet?: boolean;
+  createdAt: Date;
 }
 
-const GreySpan = ({ children, singleTweet }: any) => {
+export const GreySpan = ({ children, singleTweet }: any) => {
   const styles = singleTweet
     ? {
         color: grey[500],
@@ -24,15 +26,20 @@ const GreySpan = ({ children, singleTweet }: any) => {
   return <span style={styles}>{children}</span>;
 };
 
-const TweetHeader: React.FC<TweetHeaderProps> = ({ user, singleTweet }) => {
+const TweetHeader: React.FC<TweetHeaderProps> = ({
+  user,
+  singleTweet,
+  createdAt,
+}) => {
   return (
     <Typography style={singleTweet ? { marginLeft: 15 } : undefined}>
-      <b>{user.fullname}</b>
-      {singleTweet && <GreySpan>• 2 min</GreySpan>}
+      <b>{user.fullname}</b>{' '}
+      {singleTweet && (
+        <GreySpan> • {formatDate(new Date(createdAt))} ago</GreySpan>
+      )}
       {singleTweet && <br />}
       <GreySpan singleTweet>
-        @{user.username}
-        {!singleTweet && '• 2 min'}
+        @{user.username} • {!singleTweet && formatDate(new Date(createdAt))} ago
       </GreySpan>
     </Typography>
   );
