@@ -12,7 +12,7 @@ export function* fetchSingleTweetRequest({
 }: FetchTweetDataActionInterface) {
   try {
     const tweet = yield call(TweetsApi.fetchSingleTweet, id);
-    yield put(setTweetData(tweet));
+    yield put(setTweetData(tweet.data));
   } catch (error) {
     yield put(setSingleTweetLoadingState(LoadingState.ERROR));
   }
