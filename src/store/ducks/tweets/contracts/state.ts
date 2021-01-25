@@ -15,6 +15,7 @@ export interface Tweet {
     username: string;
     avatarUrl: string;
   };
+  createdAt: Date;
 }
 
 export interface TweetsState {
