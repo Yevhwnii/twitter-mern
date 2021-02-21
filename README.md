@@ -1,4 +1,4 @@
-# Twitter clone developed for learning purposes with ReactJS
+# Twitter clone developed for learning purposes with ReactJS (Unfinished)
 
 ## Backend part of application:
 
